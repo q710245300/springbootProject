@@ -1,0 +1,5 @@
+# Project exclude paths
+/blog/target/
+/springboot-02-config/target/
+/springboot-04-data/target/
+/springboot-06-security/target/

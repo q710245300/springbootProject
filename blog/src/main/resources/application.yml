@@ -1,0 +1,15 @@
+spring:
+  thymeleaf:
+    mode: HTML
+  # 指定默认的配置文件, 不需要全称，
+  profiles:
+    active: dev
+
+mybatis:
+  type-aliases-package: cn.wyy.pojo
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+pagehelper:
+  auto-dialect: mysql
+  support-methods-arguments: true
+  params: count=countSql
