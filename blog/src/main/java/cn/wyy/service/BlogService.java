@@ -13,9 +13,9 @@ public interface BlogService {
 
     List<Blog> getBlogsByCondition(Blog blog);
 
-    Blog saveBlog(Blog blog);
+    Integer saveBlog(Blog blog);
 
-    Blog updateBlog(Blog blog);
+    Integer updateBlog(Blog blog);
 
     void deleteBlog(Long id);
 }

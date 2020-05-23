@@ -20,11 +20,7 @@ public class TypeServiceImpl implements TypeService {
     @Autowired
     private TypeDao typeDao;
 
-    @Transactional
-    @Override
-    public Integer saveType(Type type) {
-        return typeDao.saveType(type);
-    }
+
 
     @Transactional
     @Override
@@ -47,10 +43,16 @@ public class TypeServiceImpl implements TypeService {
 
     @Transactional
     @Override
+    public Integer saveType(Type type) {
+        return typeDao.saveType(type);
+    }
+
+    @Transactional
+    @Override
     public Integer updateType(Type type) {
         Integer integer = typeDao.updateType(type);
         if (integer == 0) {
-            throw new NotFoundException("不存在该类型");
+            throw new NotFoundException("修改错误，该类型的id不存在");
         }
 
         return integer;
