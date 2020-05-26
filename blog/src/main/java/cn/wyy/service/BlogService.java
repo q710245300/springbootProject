@@ -1,6 +1,7 @@
 package cn.wyy.service;
 
 import cn.wyy.pojo.Blog;
+import cn.wyy.pojo.BlogQuery;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface BlogService {
 
     Blog getBlogById(Long id);
 
-    List<Blog> getBlogsByCondition(Blog blog);
+    List<Blog> getBlogsByCondition(BlogQuery blog);
 
     Integer saveBlog(Blog blog);
 

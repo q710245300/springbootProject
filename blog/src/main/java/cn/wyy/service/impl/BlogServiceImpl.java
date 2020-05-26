@@ -3,6 +3,7 @@ package cn.wyy.service.impl;
 import cn.wyy.NotFoundException;
 import cn.wyy.dao.BlogDao;
 import cn.wyy.pojo.Blog;
+import cn.wyy.pojo.BlogQuery;
 import cn.wyy.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Blog> getBlogsByCondition(Blog blog) {
+    public List<Blog> getBlogsByCondition(BlogQuery blog) {
         List<Blog> bloglist = blogDao.getBlogsByCondition(blog);
         return bloglist;
     }

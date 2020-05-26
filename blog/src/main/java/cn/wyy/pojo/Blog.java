@@ -24,11 +24,11 @@ public class Blog {
     private String firstPicture;
     private String flag;
     private Integer views;
-    private boolean appreciation;
-    private boolean shareStatement;
-    private boolean commentable;
-    private boolean published;
-    private boolean recommend;
+    private Boolean appreciation;
+    private Boolean shareStatement;
+    private Boolean commentable;
+    private Boolean published;
+    private Boolean recommend;
     private Date createTime;
     private Date updateTime;
 

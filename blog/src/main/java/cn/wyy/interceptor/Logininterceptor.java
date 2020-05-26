@@ -17,6 +17,7 @@ public class Logininterceptor implements HandlerInterceptor {
                              Object handler) throws Exception {
         if(request.getSession().getAttribute("user") == null) {
             response.sendRedirect("/admin");
+            return false;
         }
         // 放行
         return true;

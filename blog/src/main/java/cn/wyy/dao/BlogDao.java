@@ -1,6 +1,7 @@
 package cn.wyy.dao;
 
 import cn.wyy.pojo.Blog;
+import cn.wyy.pojo.BlogQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +16,7 @@ public interface BlogDao {
 
     Blog getBlogById(Long id);
 
-    List<Blog> getBlogsByCondition(Blog blog);
+    List<Blog> getBlogsByCondition(BlogQuery blog);
 
     Integer saveBlog(Blog blog);
 

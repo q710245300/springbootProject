@@ -1,5 +1,6 @@
 package cn.wyy.controller.admin;
 
+import cn.wyy.pojo.Blog;
 import cn.wyy.pojo.User;
 import cn.wyy.service.UserSerivce;
 import org.springframework.beans.factory.annotation.Autowired;

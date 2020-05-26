@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.wyy.dao.BlogDao">
-    <select id="getBlogById" resultType="Blog">
+    <select id="getBlogById" parameterType="Blog" resultType="Blog">
         select * from t_blog where id = #{id}
     </select>
-    <select id="getBlogsByCondition" resultType="Type">
-        select * from t_blog where name = #{name} and 
+    <select id="getBlogsByCondition" resultType="Type" parameterType="BlogQuery">
+        select * from t_blog where 1 = 1
+            <if test="title != null">
+                and title = #{title} and
+            </if>
+            <if test="typeId!= null">
+                type_id = #{type} and
+            </if>
+            <if test="recommend != null">
+                recommend = #{recommend}
+            </if>
     </select>
     <insert id="saveBlog">
         insert into t_blog (id,title, content, first_picture, flag,
