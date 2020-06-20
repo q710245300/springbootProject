@@ -34,6 +34,7 @@ public class TypeController {
     // 跳转到新增页面
     @GetMapping("types/add")
     public String add(Model model) {
+        model.addAttribute("type", new Type());
         return "admin/type-add";
     }
 

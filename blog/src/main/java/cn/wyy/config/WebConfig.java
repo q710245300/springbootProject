@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 加入自定义的interceptor,需要过滤/admin下的页面，同时需要过滤掉登录页面/admin和登录请求url/admin/login
+        // 加入自定义的interceptor,需要过滤/admin下的页面，同时不需要过滤掉登录页面/admin和登录请求url/admin/login
         registry.addInterceptor(new Logininterceptor())
                 .addPathPatterns("/admin/**").excludePathPatterns("/admin").excludePathPatterns("/admin/login");
     }

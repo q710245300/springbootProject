@@ -29,6 +29,7 @@ public class LoginController {
         return "admin/login";
     }
 
+    // 首次登陆
     @PostMapping("/login")
     public String loginPage(@RequestParam String username, @RequestParam String password, HttpSession session, RedirectAttributes attributes) {
 
@@ -45,6 +46,15 @@ public class LoginController {
             return "redirect:/admin";
         }
     }
+
+    // 这里有个问题，就是用户直接访问/admin/login的时候会报错
+//    @GetMapping
+//    public String loginPage2(HttpSession session) {
+//        User user = (User) session.getAttribute("user");
+//        if (user != null) {
+//            return "admin/index";
+//        }
+//    }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {

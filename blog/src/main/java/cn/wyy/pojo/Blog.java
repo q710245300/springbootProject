@@ -32,6 +32,8 @@ public class Blog {
     private Date createTime;
     private Date updateTime;
 
+    private String description;
+
     private Type type;
 
     private List<Tag> tags = new ArrayList<>();
@@ -39,7 +41,6 @@ public class Blog {
     private User user;
 
     public List<Comment> comments = new ArrayList<>();
-
 
 
 

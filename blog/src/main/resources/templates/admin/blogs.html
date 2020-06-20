@@ -54,17 +54,17 @@
             <input type="text" name="title" placeholder="标题">
           </div>
           <div class="field">
-            <div class="ui selection dropdown">
-              <input type="hidden" name="typeId">
-              <i class="dropdown icon"></i>
-              <div class="default text">分类</div>
-              <div class="menu">
-                <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">错误日志</div>
-                <!--/*-->
-                <div class="item" data-value="2">开发者手册</div>
-                <!--*/-->
+            <div class="ui labeled action input">
+              <div class="ui type selection dropdown">
+                <input type="hidden" name="typeId">
+                <i class="dropdown icon"></i>
+                <div class="default text">分类</div>
+                <div class="menu">
+                  <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">错误日志</div>
+                </div>
               </div>
-            </div>
+             </div>
+
           </div>
           <div class="field">
             <div class="ui checkbox">
@@ -92,29 +92,37 @@
         </thead>
         <tbody>
           <tr th:each="blog, iterStat : ${blogList.list}">
-            <td th:text="iterStat.count">1</td>
-            <td th:text="${blog.title]}">刻意练习清单</td>
-            <td th:text="${blog.type.name}}">认知升级</td>
-            <td th:text="${blog.recommended} ? '是' : '否'"></td>是</td>
+            <td th:text="${iterStat.count}">1</td>
+            <td th:text="${blog.title}">刻意练习清单</td>
+            <td th:text="${blog.getType().name}">认知升级</td>
+            <td th:text="${blog.recommend} ? '是' : '否'">是</td>
+            <td th:text="${blog.published} ? '发布' : '草稿'">草稿</td>
             <td th:text="${blog.updateTime}">2017-10-02 09:45</td>
             <td>
-              <a href="#" th:href="@{/admin/blogs/{id}/update(id = ${blog.id})}" class="ui mini teal basic button">编辑</a>
-              <a href="#" th:href="@{/admin/blogs/{id}/delete = ${blog.id})}" class="ui mini red basic button">删除</a>
+              <a href="#" th:href="@{/admin/blogs/{id}/input(id = ${blog.id})}" class="ui mini teal basic button">编辑</a>
+              <a href="#" th:href="@{/admin/blogs/{id}/delete(id = ${blog.id})}" class="ui mini red basic button">删除</a>
             </td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="6">
+            <th colspan="7">
               <div class="ui mini pagination menu" th:if="${blogList.pages} > 1">
                 <a onclick="page(this)" th:attr="data-page=${blogList.pageNum}-1" th:unless="${blogList.isFirstPage}" class=" item">上一页</a>
                 <a onclick="page(this)" th:attr="data-page=${blogList.pageNum}+1" th:unless="${blogList.isLastPage}" class=" item">下一页</a>
               </div>
-              <a href="#" class="ui mini right floated teal basic button">新增</a>
+              <a href="#" th:href="@{/admin/blogs/input}" class="ui mini right floated teal basic button">新增</a>
             </th>
           </tr>
         </tfoot>
       </table>
+      </div>
+
+      <!-- 消息提示框:只有操作不成功的时候才会显示 -->
+      <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+        <i class="close icon"></i>
+        <div class="header">提示:</div>
+        <p th:text="${message}">恭喜，操作成功！</p>
       </div>
     </div>
   </div>
@@ -177,6 +185,10 @@
       loaddata();
     }
 
+    $("#search-btn").click(function () {
+      loaddata();
+    });
+
     function loaddata() {
       $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search",{
         title : $("[name='title']").val(),
@@ -186,9 +198,14 @@
       });
     }
 
-    $("#search-btn").click(function () {
-      loaddata();
-    })
+    $('#clear-btn')
+            .on('click', function() {
+              alert(1);
+              $('.ui.type.dropdown')
+                      .dropdown('clear')
+              ;
+            })
+    ;
 
 
 
