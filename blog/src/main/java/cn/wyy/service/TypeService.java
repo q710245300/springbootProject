@@ -17,7 +17,8 @@ public interface TypeService {
 
     Type getTypeByName(String name);
 
-    List<Type> getAllTypes();
+    List<Type> getAllTypes(Integer size);
+
 
     Integer updateType(Type type);
 

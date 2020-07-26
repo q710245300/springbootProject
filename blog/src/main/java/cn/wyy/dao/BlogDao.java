@@ -19,9 +19,13 @@ public interface BlogDao {
 
     List<Blog> getBlogsByUser(User user);
 
-//    List<Blog> getAllBlogs();
+    List<Blog> getAllBlogs();
 
     List<Blog> getBlogsByCondition(BlogQuery blog);
+
+    List<Blog> getRecommendedBlog();
+
+    List<Blog> queryBlogs(String query);
 
     Integer saveBlog(Blog blog);
 

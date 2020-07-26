@@ -5,7 +5,7 @@
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
-        <result property="firstPicture" column="firstPicture"/>
+        <result property="firstPicture" column="first_picture"/>
         <result property="flag" column="flag"/>
         <result property="views" column="views"/>
         <result property="appreciation" column="appreciation"/>
@@ -23,6 +23,14 @@
              -->
             <id property="id" column="type_id"/>
             <result property="name" column="type_name"/>
+        </association>
+        <association property="user" javaType="User">
+            <id property="id" column="uid"/>
+            <result property="username" column="username"/>
+            <result property="password" column="password"/>
+            <result property="email" column="email"/>
+            <result property="avatar" column="avatar"/>
+            <result property="nickname" column="nickname"/>
         </association>
 <!--        <association property="user" javaType="User">-->
 <!--            <id property="id" column="id"/>-->
@@ -43,6 +51,14 @@
     <select id="getBlogsByUser" parameterType="User" resultMap="blogMap">
         select b.*, t.name as type_name from t_blog b left join t_type t on b.type_id = t.id where b.user_id = #{id}
     </select>
+    <select id="getAllBlogs" resultMap="blogMap">
+        select b.*, u.id as uid, u.username, u.password, u.email, u.avatar, u.nickname, t.name as type_name from (t_blog b left join t_user u on b.user_id = u.id) left join t_type t on b.type_id = t.id
+    </select>
+
+    <select id="queryBlogs" resultMap="blogMap">
+         select b.*, u.id as uid, u.username, u.password, u.email, u.avatar, u.nickname, t.name as type_name from (t_blog b left join t_user u on b.user_id = u.id) left join t_type t on b.type_id = t.id where b.title like #{query} or b.content like #{query}
+    </select>
+
     <select id="getBlogsByCondition" resultMap="blogMap" parameterType="BlogQuery">
         select * from t_blog b where recommend = #{recommend}
             <if test="title != null and title != ''">
@@ -52,6 +68,11 @@
                 and type_id = #{typeId}
             </if>
     </select>
+
+    <select id="getRecommendedBlog" resultMap="blogMap">
+        select b.* from t_blog b where b.recommend = true;
+    </select>
+
     <insert id="saveBlog" parameterType="Blog">
         insert into t_blog (title, content, first_picture, flag,
         views, appreciation, share_statement, commentable, published,

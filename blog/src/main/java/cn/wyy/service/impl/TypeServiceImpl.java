@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -29,6 +31,7 @@ public class TypeServiceImpl implements TypeService {
         return typeById;
     }
 
+    @Transactional
     @Override
     public Type getTypeByName(String name) {
         return typeDao.getTypeByName(name);
@@ -36,10 +39,30 @@ public class TypeServiceImpl implements TypeService {
 
     @Transactional
     @Override
-    public List<Type> getAllTypes() {
+    public List<Type> getAllTypes(Integer size) {
         List<Type> allTypes = typeDao.getAllTypes();
-        return allTypes;
+
+        List<Type> types = allTypes;
+        if (size != null) {
+            allTypes.sort(new Comparator<Type>() {
+                @Override
+                public int compare(Type o1, Type o2) {
+                    return o2.getBlogs().size() - o1.getBlogs().size();
+                }
+            });
+
+            size = Math.min(size, allTypes.size());
+            types = allTypes.subList(0, size);
+        }
+
+        return types;
     }
+
+//    @Transactional
+//    @Override
+//    public List<Type> getTypesTop(Integer size) {
+//        return typeDao.getTypesTop(size);
+//    }
 
     @Transactional
     @Override

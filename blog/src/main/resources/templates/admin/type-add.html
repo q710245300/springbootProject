@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="admin/_fragments :: head(~{::title})">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,7 +54,8 @@
       <div class="header">提示:</div>
       <p th:text="${message}">恭喜，操作成功！</p>
     </div>
-    <form action="#" method="post" th:object="${type}" th:action="*{id}==null ? @{/admin/types} : @{/admin/types/{id}(id=*{id})} " class="ui form">
+<!--    <form action="#" method="post" th:object="${type}" th:action="*{id}==null ? @{/admin/types} : @{/admin/types/{id}(id=*{id})} " class="ui form">-->
+    <form action="#" method="post" th:object="${type}" th:action="@{/admin/types}" class="ui form">
       <input type="hidden" name="id" th:value="*{id}">
       <div class="required field">
         <div class="ui left labeled input">

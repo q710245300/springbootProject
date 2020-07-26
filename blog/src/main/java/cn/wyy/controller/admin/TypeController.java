@@ -25,7 +25,7 @@ public class TypeController {
     @GetMapping("/types")
     public String types(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, Model model) {
         PageHelper.startPage(pageNum, 10);
-        List<Type> allTypes = typeService.getAllTypes();
+        List<Type> allTypes = typeService.getAllTypes(null);
         PageInfo<Type> pageInfo = new PageInfo<>(allTypes);
         model.addAttribute("allTypesPageInfo", pageInfo);
         return "admin/types";
@@ -41,23 +41,30 @@ public class TypeController {
     // 新增一个type
     @PostMapping("/types")
     public String post(Type type, RedirectAttributes attributes) {
-        if (typeService.getTypeByName(type.getName()) != null) {
-            attributes.addFlashAttribute("message", "不能重复添加分类");
-            return "redirect:/admin/types/add";
+        Integer integer;
+        if (type.getId() == null) {
+            integer = typeService.updateType(type);
         }
-        Integer integer = typeService.saveType(type);
+        else {
+            if (typeService.getTypeByName(type.getName()) != null) {
+                attributes.addFlashAttribute("message", "不能重复添加分类");
+                return "redirect:/admin/types/add";
+            }
+            integer = typeService.saveType(type);
+        }
+
 
         if (integer == 0) {
             // 新增失败
-            attributes.addFlashAttribute("message", "新增失败");
+            attributes.addFlashAttribute("message", "操作失败");
         }
         else {
-            attributes.addFlashAttribute("message", "新增成功");
+            attributes.addFlashAttribute("message", "操作成功");
         }
         return "redirect:/admin/types";
     }
 
-    // 修改一个type的页面
+    // 跳转到修改一个type的页面
     @GetMapping("types/{id}/update")
     public String updatePage(@PathVariable Long id, Model model) {
         model.addAttribute("type", typeService.getTypeById(id));
@@ -65,21 +72,21 @@ public class TypeController {
         return "admin/type-add";
     }
 
-    // 修改一个type
-    @PostMapping("/types/{id}")
-    public String post(Type updatedType, @PathVariable Long id, RedirectAttributes attributes) {
-        updatedType.setId(id);
-        Integer integer = typeService.updateType(updatedType);
-
-        if (integer == 0) {
-            // 新增失败
-            attributes.addFlashAttribute("message", "更新失败");
-        }
-        else {
-            attributes.addFlashAttribute("message", "更新成功");
-        }
-        return "redirect:/admin/types";
-    }
+//    // 修改一个type
+//    @PostMapping("/types/{id}")
+//    public String post(Type updatedType, @PathVariable Long id, RedirectAttributes attributes) {
+//        updatedType.setId(id);
+//        Integer integer =
+//
+//        if (integer == 0) {
+//            // 新增失败
+//            attributes.addFlashAttribute("message", "更新失败");
+//        }
+//        else {
+//            attributes.addFlashAttribute("message", "更新成功");
+//        }
+//        return "redirect:/admin/types";
+//    }
 
     // 删除一个type
     @GetMapping("types/{id}/delete")

@@ -17,6 +17,12 @@ public interface BlogService {
 
     List<Blog> getBlogsByCondition(BlogQuery blog);
 
+    List<Blog> getAllBlogs();
+
+    List<Blog> getRecommendedBlog(Integer size);
+
+    List<Blog> queryBlogs(String query);
+
     Integer saveBlog(Blog blog);
 
     Integer updateBlog(Blog blog);

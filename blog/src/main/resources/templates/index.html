@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!-- 标签可以作为参数传递，比如~{::title}就是将title传递到_fragments -->
 <head th:replace="_fragments :: head(~{::title})">
   <meta charset="UTF-8">
@@ -47,7 +47,7 @@
                 <h3 class="ui teal header">博客</h3>
               </div>
               <div class="right aligned column">
-                共 <h2 class="ui orange header m-inline-block m-text-thin"> 14 </h2> 篇
+                共 <h2 class="ui orange header m-inline-block m-text-thin" th:text="${blogList.total}"> 14 </h2> 篇
               </div>
             </div>
           </div>
@@ -55,6 +55,47 @@
           <!--content-->
           <div class="ui attached  segment">
 
+            <div class="ui padded vertical segment m-padded-tb-large" th:each="blog, iterStat : ${blogList.list}">
+              <div class="ui middle aligned mobile reversed stackable grid">
+                <div class="eleven wide column">
+                  <h3 class="ui header"><a th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="m-black" th:text="${blog.title}">你真的理解什么是财富自由吗？</a></h3>
+                  <p class="m-text" th:text="|${blog.description}......|">正确做好任何一件事情的前提是清晰、正确的理解目标。而事实是，我们很多人很多时候根本没有对目标正确的定义，甚至根本从来就没有想过，只是大家都那么做而已…...</p>
+                  <div class="ui grid">
+                    <div class="eleven wide column">
+                      <div class="ui mini horizontal link list">
+                        <div class="item">
+                          <!-- user的头像 -->
+                          <img src="https://unsplash.it/100/100?image=1005" th:src="@{${blog.user.avatar}}" alt="" class="ui avatar image">
+                          <!-- user的昵称 -->
+                          <div class="content"><a href="#" class="header" th:text="${blog.user.nickname}">王雨岩</a></div>
+                        </div>
+                        <!-- blog的最后更新时间 -->
+                        <div class="item">
+                          <i class="calendar icon"></i> <span th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd')}">2017-10-01</span>
+                        </div>
+                        <!-- blog的浏览次数 -->
+                        <div class="item">
+                          <i class="eye icon"></i> <span th:text="${blog.views}">2342</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- blog的类别 -->
+                    <div class="right aligned five wide column">
+                      <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin" th:text="${blog.type.name}">认知升级</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- blog的首图 -->
+                <div class="five wide column">
+                  <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">
+                    <img src="https://unsplash.it/800/450?image=1005" alt="" class="ui rounded image" th:src="@{${blog.firstPicture}}">
+                  </a>
+                </div>
+
+              </div>
+            </div>
+            <!--/*-->
             <div class="ui padded vertical segment m-padded-tb-large">
               <div class="ui mobile reversed stackable grid">
                 <div class="eleven wide column">
@@ -65,7 +106,7 @@
                       <div class="ui mini horizontal link list">
                         <div class="item">
                           <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
-                          <div class="content"><a href="#" class="header">李仁密</a></div>
+                          <div class="content"><a href="#" class="header">王雨岩</a></div>
                         </div>
                         <div class="item">
                           <i class="calendar icon"></i> 2017-10-01
@@ -99,7 +140,7 @@
                       <div class="ui mini horizontal link list">
                         <div class="item">
                           <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
-                          <div class="content"><a href="#" class="header">李仁密</a></div>
+                          <div class="content"><a href="#" class="header">王雨岩</a></div>
                         </div>
                         <div class="item">
                           <i class="calendar icon"></i> 2017-10-01
@@ -133,7 +174,7 @@
                       <div class="ui mini horizontal link list">
                         <div class="item">
                           <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
-                          <div class="content"><a href="#" class="header">李仁密</a></div>
+                          <div class="content"><a href="#" class="header">王雨岩</a></div>
                         </div>
                         <div class="item">
                           <i class="calendar icon"></i> 2017-10-01
@@ -167,7 +208,7 @@
                       <div class="ui mini horizontal link list">
                         <div class="item">
                           <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
-                          <div class="content"><a href="#" class="header">李仁密</a></div>
+                          <div class="content"><a href="#" class="header">王雨岩</a></div>
                         </div>
                         <div class="item">
                           <i class="calendar icon"></i> 2017-10-01
@@ -201,7 +242,7 @@
                       <div class="ui mini horizontal link list">
                         <div class="item">
                           <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
-                          <div class="content"><a href="#" class="header">李仁密</a></div>
+                          <div class="content"><a href="#" class="header">王雨岩</a></div>
                         </div>
                         <div class="item">
                           <i class="calendar icon"></i> 2017-10-01
@@ -235,7 +276,7 @@
                       <div class="ui mini horizontal link list">
                         <div class="item">
                           <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
-                          <div class="content"><a href="#" class="header">李仁密</a></div>
+                          <div class="content"><a href="#" class="header">王雨岩</a></div>
                         </div>
                         <div class="item">
                           <i class="calendar icon"></i> 2017-10-01
@@ -269,7 +310,7 @@
                       <div class="ui mini horizontal link list">
                         <div class="item">
                           <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
-                          <div class="content"><a href="#" class="header">李仁密</a></div>
+                          <div class="content"><a href="#" class="header">王雨岩</a></div>
                         </div>
                         <div class="item">
                           <i class="calendar icon"></i> 2017-10-01
@@ -303,7 +344,7 @@
                       <div class="ui mini horizontal link list">
                         <div class="item">
                           <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
-                          <div class="content"><a href="#" class="header">李仁密</a></div>
+                          <div class="content"><a href="#" class="header">王雨岩</a></div>
                         </div>
                         <div class="item">
                           <i class="calendar icon"></i> 2017-10-01
@@ -337,41 +378,7 @@
                       <div class="ui mini horizontal link list">
                         <div class="item">
                           <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
-                          <div class="content"><a href="#" class="header">李仁密</a></div>
-                        </div>
-                        <div class="item">
-                          <i class="calendar icon"></i> 2017-10-01
-                        </div>
-                        <div class="item">
-                          <i class="eye icon"></i> 2342
-                        </div>
-                      </div>
-                    </div>
-                    <div class="right aligned five wide column">
-                      <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">认知升级</a>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="five wide column">
-                  <a href="#" target="_blank">
-                    <img src="https://unsplash.it/800/450?image=1005" alt="" class="ui rounded image">
-                  </a>
-                </div>
-
-              </div>
-            </div>
-            <div class="ui padded vertical segment m-padded-tb-large">
-              <div class="ui mobile reversed stackable grid">
-                <div class="eleven wide column">
-                  <h3 class="ui header">你真的理解什么是财富自由吗？</h3>
-                  <p class="m-text">正确做好任何一件事情的前提是清晰、正确的理解目标。而事实是，我们很多人很多时候根本没有对目标正确的定义，甚至根本从来就没有想过，只是大家都那么做而已…...</p>
-                  <div class="ui grid">
-                    <div class="eleven wide column">
-                      <div class="ui mini horizontal link list">
-                        <div class="item">
-                          <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
-                          <div class="content"><a href="#" class="header">李仁密</a></div>
+                          <div class="content"><a href="#" class="header">王雨岩</a></div>
                         </div>
                         <div class="item">
                           <i class="calendar icon"></i> 2017-10-01
@@ -395,18 +402,18 @@
 
               </div>
             </div>
-
+            <!--*/-->
 
           </div>
 
           <!--footer-->
-          <div class="ui bottom attached segment">
+          <div class="ui bottom attached segment" th:if="${blogList.pages > 1}">
             <div class="ui middle aligned two column grid">
               <div class="column">
-                <a href="#" class="ui mini teal basic button">上一页</a>
+                <a th:href="@{/(pageNum=${blogList.hasPreviousPage}?${blogList.prePage}:1)}" th:unless="${blogList.isFirstPage}" class="ui mini teal basic button">上一页</a>
               </div>
               <div class="right aligned column">
-                <a href="#" class="ui mini teal basic button">下一页</a>
+                <a th:href="@{/(pageNum=${blogList.hasNextPage}?${blogList.nextPage}:${blogList.pages})}" th:unless="${blogList.isLastPage}" class="ui mini teal basic button">下一页</a>
               </div>
             </div>
           </div>
@@ -430,10 +437,11 @@
             </div>
             <div class="ui teal segment">
               <div class="ui fluid vertical menu">
-                <a href="#" class="item">
-                  学习日志
-                  <div class="ui teal basic left pointing label">13</div>
+                <a href="#" class="item" th:each="type: ${types}">
+                  <span th:text="${type.name}">学习日志</span>
+                  <div class="ui teal basic left pointing label" th:text="${#arrays.length(type.blogs)}">13</div>
                 </a>
+                <!--/*-->
                 <a href="#" class="item">
                   思考与感悟
                   <div class="ui teal basic left pointing label">13</div>
@@ -454,11 +462,13 @@
                   学习日志
                   <div class="ui teal basic left pointing label">13</div>
                 </a>
+                <!--*/-->
               </div>
             </div>
           </div>
 
           <!--标签-->
+          <!--/*-->
           <div class="ui segments m-margin-top-large">
             <div class="ui secondary segment">
               <div class="ui two column grid">
@@ -503,15 +513,17 @@
               </a>
             </div>
           </div>
+          <!--*/-->
 
           <!--最新推荐-->
           <div class="ui segments m-margin-top-large">
             <div class="ui secondary segment ">
               <i class="bookmark icon"></i>最新推荐
             </div>
-            <div class="ui segment">
-              <a href="#" target="_blank" class="m-black m-text-thin">用户故事（User Story）</a>
+            <div class="ui segment" th:each="blog: ${recommendBlogs}">
+              <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="m-black m-text-thin" th:text="${blog.title}">用户故事（User Story）</a>
             </div>
+            <!--/*-->
             <div class="ui segment" >
               <a href="#" target="_blank" class="m-black m-text-thin">用户故事（User Story）</a>
             </div>
@@ -533,6 +545,7 @@
             <div class="ui segment">
               <a href="#" target="_blank" class="m-black m-text-thin">用户故事（User Story）</a>
             </div>
+            <!--*/-->
           </div>
 
           <!--二维码-->
